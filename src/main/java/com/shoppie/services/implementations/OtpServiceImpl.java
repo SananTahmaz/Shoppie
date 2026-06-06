@@ -1,10 +1,10 @@
 package com.shoppie.services.implementations;
 
 import com.shoppie.services.EmailService;
+import com.shoppie.services.RateLimiterService;
 import com.shoppie.services.RedisService;
 import com.shoppie.entities.User;
 import com.shoppie.enums.UserStatus;
-import com.shoppie.exceptions.OtpCooldownException;
 import com.shoppie.exceptions.ResourceNotFoundException;
 import com.shoppie.payloads.otp.OtpResendRequest;
 import com.shoppie.payloads.otp.OtpVerifyRequest;
@@ -22,6 +22,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class OtpServiceImpl implements OtpService {
     private final UserRepository userRepository;
+    private final RateLimiterService limiterService;
     private final RedisService redisService;
     private final EmailService emailService;
 
@@ -32,11 +33,15 @@ public class OtpServiceImpl implements OtpService {
 
     @Override
     public void verify(OtpVerifyRequest request) {
+        limiterService.checkOtpAttemptLimit(request.email());
         String cachedOtp = redisService.get(String.format("otp:%s", request.email()));
 
         if (cachedOtp == null || !cachedOtp.equals(request.otp())) {
+            limiterService.recordFailedOtpAttempt(request.email());
             throw new IllegalArgumentException("Invalid or expired OTP");
         }
+
+        limiterService.resetOtpAttempts(request.email());
 
         User user = userRepository
                 .findByEmailIgnoreCase(request.email())
@@ -55,9 +60,7 @@ public class OtpServiceImpl implements OtpService {
 
     @Override
     public void resend(OtpResendRequest request) {
-        if (redisService.exists(String.format("otp_cooldown:%s", request.email()))) {
-            throw new OtpCooldownException("Please wait 60 seconds before resending OTP");
-        }
+        limiterService.checkOtpResendLimit(request.email());
 
         User user = userRepository
                 .findByEmailIgnoreCase(request.email())
