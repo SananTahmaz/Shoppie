@@ -3,9 +3,7 @@ package com.shoppie.entities;
 import com.shoppie.enums.UserGender;
 import com.shoppie.enums.UserRole;
 import com.shoppie.enums.UserStatus;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -30,11 +28,15 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String encodedPassword;
     private LocalDate birthDate;
+
+    @Enumerated(EnumType.STRING)
     private UserGender gender;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserStatus status;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 }
