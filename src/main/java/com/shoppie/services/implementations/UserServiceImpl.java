@@ -1,6 +1,6 @@
 package com.shoppie.services.implementations;
 
-import com.shoppie.cache.services.RedisService;
+import com.shoppie.services.RedisService;
 import com.shoppie.entities.User;
 import com.shoppie.enums.UserRole;
 import com.shoppie.enums.UserStatus;
@@ -13,6 +13,7 @@ import com.shoppie.payloads.user.UserRegisterRequest;
 import com.shoppie.payloads.user.UserResponse;
 import com.shoppie.payloads.user.UserUpdateRequest;
 import com.shoppie.repositories.UserRepository;
+import com.shoppie.services.EmailService;
 import com.shoppie.services.OtpService;
 import com.shoppie.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final OtpService otpService;
     private final RedisService redisService;
+    private final EmailService emailService;
 
     @Override
     public UserResponse register(UserRegisterRequest request) {
@@ -53,6 +55,7 @@ public class UserServiceImpl implements UserService {
         String otp = otpService.generate();
         redisService.save(String.format("otp:%s", request.email()), otp, 300L);
         redisService.save(String.format("otp_cooldown:%s", request.email()), "true", 60L);
+        emailService.sendOtp(user.getEmail(), otp);
         return mapper.toResponse(savedUser);
     }
 

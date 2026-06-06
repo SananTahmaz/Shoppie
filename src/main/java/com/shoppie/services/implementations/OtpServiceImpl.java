@@ -1,5 +1,6 @@
 package com.shoppie.services.implementations;
 
+import com.shoppie.services.EmailService;
 import com.shoppie.services.RedisService;
 import com.shoppie.entities.User;
 import com.shoppie.enums.UserStatus;
@@ -11,15 +12,18 @@ import com.shoppie.repositories.UserRepository;
 import com.shoppie.services.OtpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class OtpServiceImpl implements OtpService {
     private final UserRepository userRepository;
     private final RedisService redisService;
+    private final EmailService emailService;
 
     @Override
     public String generate() {
@@ -55,8 +59,17 @@ public class OtpServiceImpl implements OtpService {
             throw new OtpCooldownException("Please wait 60 seconds before resending OTP");
         }
 
+        User user = userRepository
+                .findByEmailIgnoreCase(request.email())
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(
+                                String.format("User not found with email: %s", request.email())
+                        )
+                );
+
         String otp = generate();
         redisService.save(String.format("otp:%s", request.email()), otp, 300L);
         redisService.save(String.format("otp_cooldown:%s", request.email()), "true", 60L);
+        emailService.sendOtp(user.getEmail(), otp);
     }
 }
