@@ -44,6 +44,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ApiResponse.error("Validation failed", errors), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(OtpRateLimitException.class)
+    public ResponseEntity<ApiResponse<Void>> handleOtpRateLimitException(OtpRateLimitException exception) {
+        return new ResponseEntity<>(ApiResponse.error(exception.getMessage()), HttpStatus.TOO_MANY_REQUESTS);
+    }
+
     @ExceptionHandler(OtpCooldownException.class)
     public ResponseEntity<ApiResponse<Void>> handleIllegalStateException(OtpCooldownException exception) {
         return new ResponseEntity<>(ApiResponse.error(exception.getMessage()), HttpStatus.BAD_REQUEST);
