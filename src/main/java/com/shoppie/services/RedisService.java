@@ -1,4 +1,4 @@
-package com.shoppie.cache.services;
+package com.shoppie.services;
 
 public interface RedisService {
     void save(String key, String value, Long ttlSeconds);

@@ -1,6 +1,6 @@
-package com.shoppie.cache.services.implementations;
+package com.shoppie.services.implementations;
 
-import com.shoppie.cache.services.RedisService;
+import com.shoppie.services.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
