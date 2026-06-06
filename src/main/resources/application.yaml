@@ -1,3 +1,17 @@
+server:
+  port: 2323
+
 spring:
   application:
     name: shoppie
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shoppie_db
+    username: postgres
+    password: 1234567890
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
