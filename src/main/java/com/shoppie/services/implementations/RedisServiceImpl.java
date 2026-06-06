@@ -26,9 +26,4 @@ public class RedisServiceImpl implements RedisService {
     public void delete(String key) {
         template.delete(key);
     }
-
-    @Override
-    public Boolean exists(String key) {
-        return template.hasKey(key);
-    }
 }
