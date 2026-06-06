@@ -26,7 +26,10 @@ public class UserController {
     @Operation(summary = "Register user")
     public ResponseEntity<ApiResponse<UserResponse>> register(@Valid @RequestBody UserRegisterRequest request) {
         UserResponse response = service.register(request);
-        return new ResponseEntity<>(ApiResponse.success("User registered successfully", response), HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                ApiResponse.success("Registration started. Please verify OTP sent to your email", response),
+                HttpStatus.CREATED
+        );
     }
 
     @GetMapping("/{id}")
