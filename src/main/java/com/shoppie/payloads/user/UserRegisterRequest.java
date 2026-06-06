@@ -1,0 +1,20 @@
+package com.shoppie.payloads.user;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
+
+public record UserRegisterRequest(
+        @NotBlank(message = "Email is mandatory")
+        @Email(message = "Invalid email format")
+        String email,
+
+        @NotBlank(message = "Password is mandatory")
+        String password,
+
+        @NotNull(message = "Birthdate is mandatory")
+        LocalDate birthDate
+) {
+}
