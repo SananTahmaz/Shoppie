@@ -2,6 +2,7 @@ package com.shoppie.payloads.user;
 
 import com.shoppie.enums.UserGender;
 import com.shoppie.enums.UserRole;
+import com.shoppie.enums.UserStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +15,10 @@ public record UserResponse(
         String email,
         LocalDate birthDate,
         UserGender gender,
+        UserStatus status,
         UserRole role,
+        LocalDateTime activatedAt,
+        LocalDateTime frozenAt,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
