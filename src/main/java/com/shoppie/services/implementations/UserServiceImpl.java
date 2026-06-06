@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse register(UserRegisterRequest request) {
         User user = repository
-                .findByEmailContainsIgnoreCase(request.email())
+                .findByEmailIgnoreCase(request.email())
                 .orElseThrow(
                         () -> new ResourceAlreadyExistsException(
                                 String.format("User already exists with email: %s", request.email())
