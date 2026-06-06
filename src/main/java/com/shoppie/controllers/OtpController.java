@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class OtpController {
     private final OtpService service;
 
-    @PostMapping("/verify-otp")
+    @PostMapping("/verify")
     public ResponseEntity<ApiResponse<Void>> verifyOtp(@Valid @RequestBody OtpVerifyRequest request) {
         service.verify(request);
         return new ResponseEntity<>(ApiResponse.success("Account verified successfully", null), HttpStatus.OK);
     }
 
-    @PostMapping("/resend-otp")
+    @PostMapping("/resend")
     public ResponseEntity<ApiResponse<Void>> resendOtp(@Valid @RequestBody OtpResendRequest request) {
         service.resend(request);
         return new ResponseEntity<>(ApiResponse.success("OTP sent successfully", null), HttpStatus.OK);
