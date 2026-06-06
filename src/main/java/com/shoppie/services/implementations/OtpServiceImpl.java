@@ -1,6 +1,6 @@
 package com.shoppie.services.implementations;
 
-import com.shoppie.cache.services.RedisService;
+import com.shoppie.services.RedisService;
 import com.shoppie.entities.User;
 import com.shoppie.enums.UserStatus;
 import com.shoppie.exceptions.OtpCooldownException;
