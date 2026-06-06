@@ -1,9 +1,6 @@
 package com.shoppie.globals;
 
-import com.shoppie.exceptions.IncompatiblePasswordException;
-import com.shoppie.exceptions.IncompatibleStatusChangeException;
-import com.shoppie.exceptions.ResourceAlreadyExistsException;
-import com.shoppie.exceptions.ResourceNotFoundException;
+import com.shoppie.exceptions.*;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -45,6 +42,11 @@ public class GlobalExceptionHandler {
         }
 
         return new ResponseEntity<>(ApiResponse.error("Validation failed", errors), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(OtpCooldownException.class)
+    public ResponseEntity<ApiResponse<Void>> handleIllegalStateException(OtpCooldownException exception) {
+        return new ResponseEntity<>(ApiResponse.error(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
