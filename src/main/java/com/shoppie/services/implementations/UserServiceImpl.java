@@ -31,18 +31,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse register(UserRegisterRequest request) {
-        User user = repository
-                .findByEmailIgnoreCase(request.email())
-                .orElseThrow(
-                        () -> new ResourceAlreadyExistsException(
-                                String.format("User already exists with email: %s", request.email())
-                        )
-                );
+        if (repository.existsByEmailIgnoreCase(request.email())) {
+            throw new ResourceAlreadyExistsException(
+                    String.format("User already exists with email: %s", request.email())
+            );
+        }
 
-        if (!passwordEncoder.matches(request.password(), request.confirmPassword())) {
+        if (!request.password().equals(request.confirmPassword())) {
             throw new IncompatiblePasswordException("Passwords are not compatible");
         }
 
+        User user = mapper.toEntity(request);
         user.setEncodedPassword(passwordEncoder.encode(request.password()));
         user.setRole(UserRole.CUSTOMER);
         user.setStatus(UserStatus.ACTIVE);
