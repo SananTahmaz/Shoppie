@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shoppie - Verify Your Account</title>
+</head>
+<body>
+    <div style="max-width:600px;margin:auto;padding:20px;border:1px solid #ddd;border-radius:10px;">
+        <h2>Hello!</h2>
+        <p>Thank you for registering at Shoppie</p>
+        <p>Your OTP code is:</p>
+
+        <div style="font-size:32px;font-weight:bold;letter-spacing:8px;">
+            <span th:text="${otp}"></span>
+        </div>
+
+        <p>This code will expire in 5 minutes</p>
+    </div>
+</body>
+</html>
