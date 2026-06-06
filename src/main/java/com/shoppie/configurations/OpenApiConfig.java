@@ -2,7 +2,6 @@ package com.shoppie.configurations;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,14 +16,5 @@ public class OpenApiConfig {
                                 .version("1.0")
                                 .description("REST API documentation for Shoppie")
                 );
-    }
-
-    @Bean
-    public GroupedOpenApi userApi() {
-        return GroupedOpenApi
-                .builder()
-                .group("users")
-                .pathsToMatch("/api/users/**")
-                .build();
     }
 }
