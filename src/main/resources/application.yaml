@@ -20,3 +20,18 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sanan.tahmazli2329@gmail.com
+    password: glchngaqyfvlumkj
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  thymeleaf:
+    cache: false
