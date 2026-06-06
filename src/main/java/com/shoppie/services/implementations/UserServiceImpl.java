@@ -1,5 +1,6 @@
 package com.shoppie.services.implementations;
 
+import com.shoppie.cache.services.RedisService;
 import com.shoppie.entities.User;
 import com.shoppie.enums.UserRole;
 import com.shoppie.enums.UserStatus;
@@ -12,6 +13,7 @@ import com.shoppie.payloads.user.UserRegisterRequest;
 import com.shoppie.payloads.user.UserResponse;
 import com.shoppie.payloads.user.UserUpdateRequest;
 import com.shoppie.repositories.UserRepository;
+import com.shoppie.services.OtpService;
 import com.shoppie.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +30,8 @@ public class UserServiceImpl implements UserService {
     private final UserMapper mapper;
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final OtpService otpService;
+    private final RedisService redisService;
 
     @Override
     public UserResponse register(UserRegisterRequest request) {
@@ -44,9 +48,11 @@ public class UserServiceImpl implements UserService {
         User user = mapper.toEntity(request);
         user.setEncodedPassword(passwordEncoder.encode(request.password()));
         user.setRole(UserRole.CUSTOMER);
-        user.setStatus(UserStatus.ACTIVE);
-        user.setActivatedAt(LocalDateTime.now());
+        user.setStatus(UserStatus.PENDING);
         User savedUser = repository.save(user);
+        String otp = otpService.generate();
+        redisService.save(String.format("otp:%s", request.email()), otp, 300L);
+        redisService.save(String.format("otp_cooldown:%s", request.email()), "true", 60L);
         return mapper.toResponse(savedUser);
     }
 
