@@ -14,6 +14,9 @@ public record UserRegisterRequest(
         @NotBlank(message = "Password is mandatory")
         String password,
 
+        @NotBlank(message = "Confirm password is mandatory")
+        String confirmPassword,
+
         @NotNull(message = "Birthdate is mandatory")
         LocalDate birthDate
 ) {
