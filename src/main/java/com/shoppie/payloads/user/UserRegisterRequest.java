@@ -1,5 +1,6 @@
 package com.shoppie.payloads.user;
 
+import com.shoppie.annotations.PermissibleAge;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ public record UserRegisterRequest(
         String confirmPassword,
 
         @NotNull(message = "Birthdate is mandatory")
+        @PermissibleAge
         LocalDate birthDate
 ) {
 }
