@@ -21,6 +21,8 @@ public interface UserMapper {
     @Mapping(target = "gender", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "role", ignore = true)
+    @Mapping(target = "activatedAt", ignore = true)
+    @Mapping(target = "frozenAt", ignore = true)
     User toEntity(UserRegisterRequest request);
 
     @Mapping(target = "id", ignore = true)
@@ -30,6 +32,8 @@ public interface UserMapper {
     @Mapping(target = "encodedPassword", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "role", ignore = true)
+    @Mapping(target = "activatedAt", ignore = true)
+    @Mapping(target = "frozenAt", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntity(UserUpdateRequest request, @MappingTarget User user);
 }
