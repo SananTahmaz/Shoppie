@@ -21,6 +21,12 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  security:
+    jwt:
+      secret-key: tVpNqEwCvjRUNfr8wCbchN0rKtl8YntFhh4RBJ2O6Ol
+      access-token-expiration: 900000
+      refresh-token-expiration: 604800000
+
   mail:
     host: smtp.gmail.com
     port: 587
