@@ -1,6 +1,6 @@
 package com.shoppie.services.implementations;
 
-import com.shoppie.exceptions.OtpRateLimitException;
+import com.shoppie.exceptions.otp.OtpRateLimitException;
 import com.shoppie.services.RateLimiterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;

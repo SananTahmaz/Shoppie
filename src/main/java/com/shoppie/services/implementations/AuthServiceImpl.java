@@ -1,9 +1,9 @@
 package com.shoppie.services.implementations;
 
 import com.shoppie.entities.User;
-import com.shoppie.exceptions.InvalidRefreshTokenException;
-import com.shoppie.exceptions.InvalidTokenException;
-import com.shoppie.exceptions.TokenRevokedException;
+import com.shoppie.exceptions.token.InvalidRefreshTokenException;
+import com.shoppie.exceptions.token.InvalidTokenException;
+import com.shoppie.exceptions.token.TokenRevokedException;
 import com.shoppie.jwt.UserPrincipal;
 import com.shoppie.payloads.authentication.AuthResponse;
 import com.shoppie.payloads.authentication.RefreshTokenRequest;

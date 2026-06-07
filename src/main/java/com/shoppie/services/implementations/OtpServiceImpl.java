@@ -5,7 +5,7 @@ import com.shoppie.services.RateLimiterService;
 import com.shoppie.services.RedisService;
 import com.shoppie.entities.User;
 import com.shoppie.enums.UserStatus;
-import com.shoppie.exceptions.ResourceNotFoundException;
+import com.shoppie.exceptions.commons.ResourceNotFoundException;
 import com.shoppie.payloads.otp.OtpResendRequest;
 import com.shoppie.payloads.otp.OtpVerifyRequest;
 import com.shoppie.repositories.UserRepository;

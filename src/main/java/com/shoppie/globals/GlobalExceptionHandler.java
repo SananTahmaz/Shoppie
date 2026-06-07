@@ -1,6 +1,14 @@
 package com.shoppie.globals;
 
-import com.shoppie.exceptions.*;
+import com.shoppie.exceptions.commons.ResourceAlreadyExistsException;
+import com.shoppie.exceptions.commons.ResourceNotFoundException;
+import com.shoppie.exceptions.otp.OtpCooldownException;
+import com.shoppie.exceptions.otp.OtpRateLimitException;
+import com.shoppie.exceptions.token.InvalidRefreshTokenException;
+import com.shoppie.exceptions.token.InvalidTokenException;
+import com.shoppie.exceptions.token.TokenRevokedException;
+import com.shoppie.exceptions.user.IncompatiblePasswordException;
+import com.shoppie.exceptions.user.IncompatibleStatusChangeException;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
