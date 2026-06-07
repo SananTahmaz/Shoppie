@@ -17,6 +17,7 @@ import com.shoppie.services.EmailService;
 import com.shoppie.services.OtpService;
 import com.shoppie.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("hasRole('ADMIN') or @userSecurity.isOwner(#id)")
     public UserResponse getById(Long id) {
         User user = repository
                 .findById(id)
@@ -71,11 +73,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getAll() {
         return repository.findAll().stream().map(mapper::toResponse).toList();
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or @userSecurity.isOwner(#id)")
     public UserResponse update(Long id, UserUpdateRequest request) {
         User user = repository
                 .findById(id)
@@ -86,6 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or @userSecurity.isOwner(#id)")
     public void delete(Long id) {
         User user = repository
                 .findById(id)
@@ -95,6 +100,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or @userSecurity.isOwner(#id)")
     public UserResponse freeze(Long id) {
         User user = repository
                 .findById(id)
@@ -110,6 +116,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or @userSecurity.isOwner(#id)")
     public UserResponse activate(Long id) {
         User user = repository
                 .findById(id)
