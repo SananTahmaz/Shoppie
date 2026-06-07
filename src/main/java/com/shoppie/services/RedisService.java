@@ -6,4 +6,6 @@ public interface RedisService {
     String get(String key);
 
     void delete(String key);
+
+    Boolean exists(String key);
 }
