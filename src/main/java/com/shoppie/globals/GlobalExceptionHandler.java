@@ -44,6 +44,23 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ApiResponse.error("Validation failed", errors), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(TokenRevokedException.class)
+    public ResponseEntity<ApiResponse<Void>> handleTokenRevokedException(TokenRevokedException exception) {
+        return new ResponseEntity<>(ApiResponse.error(exception.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ResponseEntity<ApiResponse<Void>> handleInvalidRefreshTokenException(
+            InvalidRefreshTokenException exception
+    ) {
+        return new ResponseEntity<>(ApiResponse.error(exception.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ApiResponse<Void>> handleInvalidTokenException(InvalidTokenException exception) {
+        return new ResponseEntity<>(ApiResponse.error(exception.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(OtpRateLimitException.class)
     public ResponseEntity<ApiResponse<Void>> handleOtpRateLimitException(OtpRateLimitException exception) {
         return new ResponseEntity<>(ApiResponse.error(exception.getMessage()), HttpStatus.TOO_MANY_REQUESTS);
